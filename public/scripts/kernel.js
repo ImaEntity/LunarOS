@@ -42,6 +42,8 @@ function kernel_entryPoint() {
     }, 20);
 
     setInterval(function() {
+        draw.clearRect(0, 0, width, height);
+        
         for(const func of displayFunctions) func();
     });
 
