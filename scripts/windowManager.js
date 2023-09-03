@@ -43,6 +43,32 @@ function moveToFront(index) {
     return windows.length - 1;
 }
 
+function windowManager_createWindow(title, pos, size, onUpdate) {
+    return new Promise(function(resolve) {
+        const win = {
+            pos,
+            size,
+            title,
+            created: false,
+            onUpdate: function(updateType, params) {
+                switch(updateType) {
+                    case "close": {
+                        const resCode = onUpdate(updateType, params);
+
+                        resolve();
+                        return resCode ?? "default";
+                    }
+                    
+                    default:
+                        return onUpdate(updateType, params);
+                }
+            }
+        };
+
+        windows.push(win);
+    });
+}
+
 function windowManager_createPopup(title, text, options) {
     return new Promise(function(resolve) {
         const popup = {

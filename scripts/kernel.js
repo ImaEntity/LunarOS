@@ -7,6 +7,14 @@ function kernel_openLink(link) {
     window.open(link, "_blank");
 }
 
+function kernel_broadcastFinish(id) {
+    document.dispatchEvent(new CustomEvent("scriptFinished", {
+        detail: {
+            id
+        }
+    }));
+}
+
 function kernel_entryPoint() {
     draw.fillStyle = "#00ff00";
     draw.fillText("Kernel started.", 0, 40);

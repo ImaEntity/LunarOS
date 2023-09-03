@@ -5,9 +5,10 @@
     });
 
     if(res != "Yes") {
-        
+        kernel_broadcastFinish("discord");
         return;
     }
 
     kernel_openLink("https://discord.gg/JjYJr8sanu");
+    kernel_broadcastFinish("discord");
 }());

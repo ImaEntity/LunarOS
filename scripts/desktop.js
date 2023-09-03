@@ -26,9 +26,16 @@ function desktop_update() {
 
         if(mouse.x > i * 96 + 8 && mouse.x < i * 96 + 56 && mouse.y > 8 && mouse.y < 56 && mouse.doubleClicked) {
             const script = document.createElement("script");
-
+            
+            script.id = icon.scriptPath.split('/')[1];
             script.src = `assets/${icon.scriptPath}.js`;
-            script.id = icon.scriptPath;
+
+            document.addEventListener("scriptFinished", function(e) {
+                if(e.detail.id != script.id) return;
+                
+                script.remove();
+                document.removeEventListener("scriptFinished", arguments.callee);
+            });
 
             document.body.appendChild(script);
         }
