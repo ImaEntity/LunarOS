@@ -7,7 +7,7 @@ const icons = [
     {
         name: "Task Manager",
         scriptPath: "apps/taskmgr/main",
-        icon: "apps/discord/icon"
+        icon: "apps/taskmgr/icon"
     }
 ];
 
@@ -32,7 +32,7 @@ function desktop_update() {
 
             document.addEventListener("scriptFinished", function(e) {
                 if(e.detail.id != script.id) return;
-                
+
                 script.remove();
                 document.removeEventListener("scriptFinished", arguments.callee);
             });
