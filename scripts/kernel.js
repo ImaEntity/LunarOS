@@ -17,6 +17,8 @@ function kernel_broadcastFinish(id) {
 
 function kernel_setBackground(img) {
     document.body.style.backgroundImage = `url(assets/${img}.png)`;
+    document.body.style.backgroundSize = `${width}px ${height}px`;
+    document.body.style.backgroundRepeat = "no-repeat";
 }
 
 function kernel_entryPoint() {
