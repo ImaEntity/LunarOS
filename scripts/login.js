@@ -1,7 +1,7 @@
 const password = "LunarOS";
 
 let inputPassword = "";
-let loggedIn = true;
+let loggedIn = false;
 
 function login_start() {
     kernel_addFunctionPair(login_update, login_display);
