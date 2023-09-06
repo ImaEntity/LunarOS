@@ -3,6 +3,10 @@ const password = "LunarOS";
 let inputPassword = "";
 let loggedIn = false;
 
+// Angie, add a attempt limit on the passsword.
+// And maybe add a login error message?
+// You dipshit.
+
 function login_start() {
     kernel_addFunctionPair(login_update, login_display);
 
@@ -39,6 +43,11 @@ function login_display() {
     draw.roundRect(width / 2 - 200, height / 2 + 90 , 400, 40, 10);
     draw.fill();
     draw.stroke();
+
+    draw.fillStyle = "#ffffff99";
+    draw.font = "25px Georgia";
+    draw.textAlign = "left";
+    draw.fillText(`Version ${kernel_getVersion()}`, 10, height - 10);
 }
 
 window.addEventListener("keydown", function(e) {

@@ -7,6 +7,10 @@ function kernel_openLink(link) {
     window.open(link, "_blank");
 }
 
+function kernel_getVersion() {
+    return "1.0.0";
+}
+
 function kernel_broadcastFinish(id) {
     document.dispatchEvent(new CustomEvent("scriptFinished", {
         detail: {
