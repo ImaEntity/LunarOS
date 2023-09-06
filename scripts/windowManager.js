@@ -138,7 +138,7 @@ function windowManager_createPopup(title, text, options) {
     });
 }
 
-function windowManager_update() {
+async function windowManager_update() {
     if(mouseDown && !mouse.left) mouseReleased = true;
     if(!mouseDown && mouse.left) mouseDownPos = {x: mouse.x, y: mouse.y};
 
@@ -156,22 +156,13 @@ function windowManager_update() {
         const {pos, size, onUpdate} = win;
 
         if(!win.created) {
-            const resCode = onUpdate("create");
+            const resCode = await onUpdate("create");
             if(resCode == "close") {
                 windows.splice(i, 1);
                 continue;
             }
 
             win.created = true;
-        }
-
-        if(mouse.x >= pos[0] && mouse.x <= pos[0] + size[0] && mouse.y >= pos[1] + 30 && mouse.y <= pos[1] + size[1] && mouse.left) {
-            const resCode = onUpdate("click", [mouse.x - pos[0], mouse.y - pos[1] - 30]);
-
-            if(resCode == "close") {
-                windows.splice(i, 1);
-                continue;
-            }
         }
 
         if(mouse.x >= pos[0] + size[0] - 30 && mouse.x <= pos[0] + size[0] && mouse.y >= pos[1] && mouse.y <= pos[1] + 30) {
@@ -182,10 +173,22 @@ function windowManager_update() {
 
             if(draggingWindow != null) continue;
 
-            const resCode = onUpdate("close");
+            const resCode = await onUpdate("close");
 
             if(resCode == "default") windows.splice(i, 1);
             continue;
+        }
+
+        if(mouse.x >= pos[0] && mouse.x <= pos[0] + size[0] && mouse.y >= pos[1] + 30 && mouse.y <= pos[1] + size[1]) {
+            if(!mouseReleased && mouse.left) break;
+            else if(!mouseReleased) break;
+
+            const resCode = await onUpdate("click", [mouse.x - pos[0], mouse.y - pos[1] - 30]);
+
+            if(resCode == "close") {
+                windows.splice(i, 1);
+                continue;
+            }
         }
 
         if(mouse.x >= pos[0] && mouse.x <= pos[0] + size[0] - 30 && mouse.y >= pos[1] && mouse.y <= pos[1] + 30 && mouse.left && !mouseDown) {
@@ -209,7 +212,7 @@ function windowManager_update() {
     if(mouseReleased) mouseReleased = false;
 }
 
-function windowManager_display() {
+async function windowManager_display() {
     for(let i = 0; i < windows.length; i++) {
         const win = windows[i];
         const {pos, size, title} = win;
@@ -267,7 +270,7 @@ function windowManager_display() {
         draw.save();
 
         draw.translate(pos[0], pos[1] + 30);
-        win.onUpdate("render");
+        await win.onUpdate("render");
 
         draw.restore();
     }  

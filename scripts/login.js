@@ -1,10 +1,12 @@
 const password = "LunarOS";
 
 let inputPassword = "";
-let loggedIn = false;
+let loggedIn = true;
 
 function login_start() {
     kernel_addFunctionPair(login_update, login_display);
+
+    kernel_setBackground("backgrounds/loginDefault");
 }
 
 function login_stop() {
@@ -19,13 +21,9 @@ function login_update() {
 }
 
 function login_display() {
-    const loginBG = kernel_loadAsset("backgrounds/loginDefault");
-
     draw.fillStyle = "#ffffff99";
     draw.strokeStyle = "#ffffff";
     draw.lineWidth = 2;
-
-    draw.drawImage(loginBG, 0, 0, width, height);
 
     draw.font = "40px Georgia";
     draw.textAlign = "center";

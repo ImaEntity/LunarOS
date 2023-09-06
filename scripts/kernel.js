@@ -15,6 +15,10 @@ function kernel_broadcastFinish(id) {
     }));
 }
 
+function kernel_setBackground(img) {
+    document.body.style.backgroundImage = `url(assets/${img}.png)`;
+}
+
 function kernel_entryPoint() {
     draw.fillStyle = "#00ff00";
     draw.fillText("Kernel started.", 0, 40);

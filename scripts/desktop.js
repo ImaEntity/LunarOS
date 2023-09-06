@@ -13,6 +13,8 @@ const icons = [
 
 function desktop_start() {
     kernel_addFunctionPair(desktop_update, desktop_display);
+
+    kernel_setBackground("backgrounds/default");
     kernel_loadScript("windowManager");
 }
 
@@ -44,10 +46,6 @@ function desktop_update() {
 
 
 function desktop_display() {
-    const desktopBG = kernel_loadAsset("backgrounds/default");
-
-    draw.drawImage(desktopBG, 0, 0, width, height);
-
     for(let i = 0; i < icons.length; i++) {
         const icon = icons[i];
 
