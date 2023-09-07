@@ -8,7 +8,7 @@ function kernel_openLink(link) {
 }
 
 function kernel_getVersion() {
-    return "1.0.0";
+    return "1.0.1";
 }
 
 function kernel_broadcastFinish(id) {

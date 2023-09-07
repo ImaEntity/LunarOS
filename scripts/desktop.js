@@ -8,6 +8,11 @@ const icons = [
         name: "Task Manager",
         scriptPath: "apps/taskmgr/main",
         icon: "apps/taskmgr/icon"
+    },
+    {
+        name: "Terminal",
+        scriptPath: "apps/terminal/main",
+        icon: "apps/terminal/icon"
     }
 ];
 
