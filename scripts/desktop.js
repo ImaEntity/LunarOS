@@ -49,7 +49,6 @@ function desktop_update() {
     }
 }
 
-
 function desktop_display() {
     for(let i = 0; i < icons.length; i++) {
         const icon = icons[i];
@@ -58,8 +57,20 @@ function desktop_display() {
 
         draw.textAlign = "center";
         draw.fillStyle = "#ffffff";
-        draw.font = "15px Georgia";
+        kernel_setFontSize(15);
 
         draw.fillText(icon.name, i * 96 + 32, 72);
     }
+
+    if(!mouseDown) return;
+    //return;
+
+    draw.lineWidth = 2;
+    draw.fillStyle = "#00cc9966";
+    draw.strokeStyle = "#00cc99";
+
+    draw.beginPath();
+    draw.roundRect(mouseDownPos.x, mouseDownPos.y, mouse.x - mouseDownPos.x, mouse.y - mouseDownPos.y, 5);
+    draw.stroke();
+    draw.fill();
 }

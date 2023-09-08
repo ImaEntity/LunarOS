@@ -8,7 +8,7 @@ const windows = [{
             case "render": {
                 draw.textAlign = "center";
                 draw.fillStyle = "#ffffff";
-                draw.font = "30px Georgia";
+                kernel_setFontSize(30);
 
                 draw.fillText("Hello, world!", 400, 250);
 
@@ -87,7 +87,7 @@ function windowManager_createPopup(title, text, options) {
                         for(let i = 0; i < options.buttons.length; i++) {
                             const button = options.buttons[i];
                         
-                            if(params[0] >= 545 - i * 50 && params[1] >= 130 && params[0] <= 590 - i * 50 && params[1] <= 160) {
+                            if(params.x >= 545 - i * 50 && params.y >= 130 && params.x <= 590 - i * 50 && params.y <= 160) {
                                 resolve(button);
                                 return "close";
                             }
@@ -99,7 +99,7 @@ function windowManager_createPopup(title, text, options) {
                     case "render": {
                         draw.textAlign = "right";
                         draw.fillStyle = "#ffffff";
-                        draw.font = "15px Georgia";
+                        kernel_setFontSize(15);
 
                         draw.fillText(text, 575, 90);
 
@@ -114,7 +114,7 @@ function windowManager_createPopup(title, text, options) {
                             draw.textAlign = "center";
                             draw.fillStyle = "#ffffff";
                             draw.strokeStyle = "#ffffff";
-                            draw.font = "15px Georgia";
+                            kernel_setFontSize(15);
 
                             draw.strokeRect(545 - i * 50, 130, 45, 30);
                             draw.fillText(button, 567 - i * 50, 150);
@@ -179,11 +179,11 @@ async function windowManager_update() {
             continue;
         }
 
-        if(mouse.x >= pos[0] && mouse.x <= pos[0] + size[0] && mouse.y >= pos[1] + 30 && mouse.y <= pos[1] + size[1]) {
+        if(mouse.x >= pos[0] && mouse.x <= pos[0] + size[0] && mouse.y >= pos[1] + 30 && mouse.y <= pos[1] + size[1] && i == windows.length - 1) {
             if(!mouseReleased && mouse.left) break;
             else if(!mouseReleased) break;
 
-            const resCode = await onUpdate("click", [mouse.x - pos[0], mouse.y - pos[1] - 30]);
+            const resCode = await onUpdate("click", {x: mouse.x - pos[0], y: mouse.y - pos[1] - 30});
 
             if(resCode == "close") {
                 windows.splice(i, 1);
@@ -262,7 +262,7 @@ async function windowManager_display() {
         draw.restore();
         
         draw.fillStyle = "#cccccc";
-        draw.font = "20px Georgia";
+        kernel_setFontSize(20);
         draw.textAlign = "left";
 
         draw.fillText(title, pos[0] + 5, pos[1] + 20);
@@ -275,3 +275,10 @@ async function windowManager_display() {
         draw.restore();
     }  
 }
+
+window.addEventListener("keydown", async function(e) {
+    const win = windows[windows.length - 1];
+
+    const resCode = await win.onUpdate("keydown", {key: e.key, code: e.code});
+    if(resCode == "close") windows.pop();
+});

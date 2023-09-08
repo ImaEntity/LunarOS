@@ -8,7 +8,7 @@ function kernel_openLink(link) {
 }
 
 function kernel_getVersion() {
-    return "1.0.1";
+    return "1.2.2";
 }
 
 function kernel_broadcastFinish(id) {
@@ -23,6 +23,14 @@ function kernel_setBackground(img) {
     document.body.style.backgroundImage = `url(assets/${img}.png)`;
     document.body.style.backgroundSize = `${width}px ${height}px`;
     document.body.style.backgroundRepeat = "no-repeat";
+}
+
+function kernel_setFont(font) {
+    draw.font = `${draw.font.split(' ')[0]} ${font}`;
+}
+
+function kernel_setFontSize(size) {
+    draw.font = `${size}px ${draw.font.split(' ').slice(1).join(' ')}`;
 }
 
 function kernel_entryPoint() {
@@ -68,6 +76,8 @@ function kernel_entryPoint() {
     draw.fillStyle = "#00ff00";
     draw.fillText("Loading login screen...", 0, 50);
 
+    kernel_setFont("Nunito");
+    //kernel_setCursor("logo");
     kernel_loadScript("login");
 }
 
@@ -97,6 +107,10 @@ function kernel_loadAsset(name) {
     img.src = `assets/${name}.png`;
 
     return img;
+}
+
+function kernel_setCursor(img) {
+    document.body.style.cursor = `url(assets/${img}.png)`;
 }
 
 function kernel_addFunctionPair(update, display) {

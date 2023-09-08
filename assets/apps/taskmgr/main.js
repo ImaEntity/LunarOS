@@ -8,7 +8,7 @@
                 case "render": {
                     draw.fillStyle = "#ffffff";
                     draw.strokeStyle = "#ffffff";
-                    draw.font = "15px Georgia";
+                    kernel_setFontSize(15);
 
                     const tasks = document.getElementsByTagName("script");
 
@@ -31,8 +31,10 @@
                 case "click": {
                     const tasks = document.getElementsByTagName("script");
 
+                    console.log("click");
+
                     for(let i = 0; i < tasks.length; i++) {
-                        if(params[0] < 330 || params[0] > 400 || params[1] < 5 + i * 20 || params[1] > 5 + i * 20 + 20) continue;
+                        if(params.x < 330 || params.x > 400 || params.y < 5 + i * 20 || params.y > 5 + i * 20 + 20) continue;
 
                         const task = tasks[i];
                         const taskName = task.getAttribute("id");

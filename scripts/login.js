@@ -29,11 +29,11 @@ function login_display() {
     draw.strokeStyle = "#ffffff";
     draw.lineWidth = 2;
 
-    draw.font = "40px Georgia";
+    kernel_setFontSize(40);
     draw.textAlign = "center";
     draw.fillText("LunarOS", width / 2, height / 2 - 120);
 
-    draw.font = "30px Georgia";
+    kernel_setFontSize(30);
     draw.fillText("Login", width / 2, height / 2 + 60);
 
     draw.fillStyle = "#ffffff";
@@ -45,7 +45,7 @@ function login_display() {
     draw.stroke();
 
     draw.fillStyle = "#ffffff99";
-    draw.font = "25px Georgia";
+    kernel_setFontSize(25);
     draw.textAlign = "left";
     draw.fillText(`Version ${kernel_getVersion()}`, 10, height - 10);
 }
