@@ -8,7 +8,7 @@ function kernel_openLink(link) {
 }
 
 function kernel_getVersion() {
-    return "1.5.3";
+    return "V1.5.3";
 }
 
 function kernel_broadcastFinish(id) {

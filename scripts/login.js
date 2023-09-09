@@ -49,7 +49,7 @@ function login_display() {
     draw.fillStyle = "#ffffff99";
     kernel_setFontSize(25);
     draw.textAlign = "left";
-    draw.fillText(`Version ${kernel_getVersion()}`, 10, height - 10);
+    draw.fillText(kernel_getVersion(), 10, height - 10);
 
     if(loginErr == null) return;
 
