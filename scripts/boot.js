@@ -1,13 +1,12 @@
 const kernel = document.createElement("script");
-const width = window.innerWidth;
-const height = window.innerHeight;
+const canvas = document.getElementById("canvas");
+const draw = canvas.getContext("2d");
 
-let draw = document.getElementById("canvas");
+let width = window.innerWidth;
+let height = window.innerHeight;
 
-draw.width = width;
-draw.height = height;
-
-draw = draw.getContext("2d");
+canvas.width = width;
+canvas.height = height;
 
 draw.fillStyle = "#000000";
 draw.fillRect(0, 0, width, height);

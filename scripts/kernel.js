@@ -8,7 +8,7 @@ function kernel_openLink(link) {
 }
 
 function kernel_getVersion() {
-    return "1.2.2";
+    return "1.5.3";
 }
 
 function kernel_broadcastFinish(id) {
@@ -21,8 +21,6 @@ function kernel_broadcastFinish(id) {
 
 function kernel_setBackground(img) {
     document.body.style.backgroundImage = `url(assets/${img}.png)`;
-    document.body.style.backgroundSize = `${width}px ${height}px`;
-    document.body.style.backgroundRepeat = "no-repeat";
 }
 
 function kernel_setFont(font) {
@@ -68,7 +66,17 @@ function kernel_entryPoint() {
     }, 20);
 
     setInterval(function() {
-        draw.clearRect(0, 0, width, height);
+        const font = draw.font;
+
+        width = window.innerWidth;
+        height = window.innerHeight;
+
+        canvas.width = width;
+        canvas.height = height;
+
+        draw.font = font;
+
+        document.body.style.backgroundSize = `${width}px ${height}px`;
         
         for(const func of displayFunctions) func();
     });
@@ -77,7 +85,6 @@ function kernel_entryPoint() {
     draw.fillText("Loading login screen...", 0, 50);
 
     kernel_setFont("Nunito");
-    //kernel_setCursor("logo");
     kernel_loadScript("login");
 }
 

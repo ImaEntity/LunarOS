@@ -3,7 +3,12 @@
 
 (async function() {
     const lines = ["C:\\>"];
+    const cmdHistory = [];
+    let historyIndex = 0;  
     let cmd = "";
+    let controlDown = false;
+    let tick = 0;
+    let cursor = "";
 
     await windowManager_createWindow(
         "Terminal",
@@ -11,6 +16,13 @@
         [900, 600],
         async function(updateType, params) {
             switch(updateType) {
+                case "update": {
+                    if(tick % 20 == 0) cursor = !cursor ? '|' : "";
+                    tick++;
+
+                    break;
+                }
+
                 case "render": {
                     draw.fillStyle = "#ffffff";
                     draw.strokeStyle = "#ffffff";
@@ -18,7 +30,7 @@
                     kernel_setFontSize(15);
 
                     for(let i = 0; i < lines.length; i++) {
-                        if(i == lines.length - 1) draw.fillText(lines[i] + cmd, 5, 20 + i * 15);
+                        if(i == lines.length - 1) draw.fillText(lines[i] + cmd + cursor, 5, 20 + i * 15);
                         else draw.fillText(lines[i], 5, 20 + i * 15);
                     }
 
@@ -45,15 +57,34 @@
                         lines.push(...outStr.split('\n'));
 
                         lines.push("", "C:\\>");
+                        cmdHistory.push(cmd);
+                        historyIndex = cmdHistory.length - 1;
                         cmd = "";
+                    } else if(params.key == "Control") {
+                        controlDown = true;
                     } else if(params.key == "Backspace") {
-                        cmd = cmd.slice(0, -1);
+                        if(controlDown) cmd = cmd.split(' ').slice(0, -1).join(' ');
+                        else cmd = cmd.slice(0, -1);
+                    } else if(params.key == "ArrowUp") {
+                        cmd = cmdHistory[historyIndex] ?? "";
+                        historyIndex = historyIndex <= 0 ? 0 : historyIndex - 1;
+                    } else if(params.key == "ArrowDown") {
+                        cmd = cmdHistory[historyIndex] ?? "";
+                        historyIndex = historyIndex >= cmdHistory.length - 1 ? cmdHistory.length - 1 : historyIndex + 1;
                     } else if(params.key.length > 1) {
                         return;
                     } else {
                         cmd += params.key;
                     }
 
+                    break;
+                }
+
+                case "keyup": {
+                    if(params.key == "Control") {
+                        controlDown = false;
+                    }
+                    
                     break;
                 }
 

@@ -2,6 +2,8 @@ const password = "LunarOS";
 
 let inputPassword = "";
 let loggedIn = false;
+let loginErr = null;
+let controlDown = false;
 
 // Angie, add a attempt limit on the passsword.
 // And maybe add a login error message?
@@ -40,7 +42,7 @@ function login_display() {
     draw.fillText(new Array(inputPassword.length + 1).join('•'), width / 2, height / 2 + 120);
 
     draw.fillStyle = "#ffffff66";
-    draw.roundRect(width / 2 - 200, height / 2 + 90 , 400, 40, 10);
+    draw.roundRect(width / 2 - 200, height / 2 + 90, 400, 40, 10);
     draw.fill();
     draw.stroke();
 
@@ -48,20 +50,43 @@ function login_display() {
     kernel_setFontSize(25);
     draw.textAlign = "left";
     draw.fillText(`Version ${kernel_getVersion()}`, 10, height - 10);
+
+    if(loginErr == null) return;
+
+    draw.fillStyle = "#ffffff99";
+    kernel_setFontSize(25);
+    draw.textAlign = "center";
+    draw.fillText(loginErr, width / 2, height / 2 + 160);
 }
 
 window.addEventListener("keydown", function(e) {
-    const key = e.key
+    const key = e.key;
     
     if(loggedIn) return;
 
     if(key == "Enter") {
         if(inputPassword == password) loggedIn = true;
+        else if(inputPassword.length > 0) loginErr = "Incorrect password.";
+        else loginErr = "Enter a password.";
     } else if(key == "Backspace") {
-        inputPassword = inputPassword.slice(0, -1);
+        if(controlDown) inputPassword = inputPassword.split(' ').slice(0, -1).join(' ');
+        else inputPassword = inputPassword.slice(0, -1);
+    } else if(key == "Control") {
+        controlDown = true;
     } else if(key.length > 1) {
         return;
     } else {
         inputPassword += key;
+        loginErr = null;
+    }
+});
+
+window.addEventListener("keyup", function(e) {
+    const key = e.key;
+
+    if(loggedIn) return;
+
+    if(key == "Control") {
+        controlDown = false;
     }
 });

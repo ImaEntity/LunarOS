@@ -165,6 +165,12 @@ async function windowManager_update() {
             win.created = true;
         }
 
+        const resCode = await win.onUpdate("update");
+        if(resCode == "close") {
+            windows.splice(i, 1);
+            continue;
+        }
+
         if(mouse.x >= pos[0] + size[0] - 30 && mouse.x <= pos[0] + size[0] && mouse.y >= pos[1] && mouse.y <= pos[1] + 30) {
             if(!mouseReleased && mouse.left) break;
             else if(!mouseReleased) break;
@@ -280,5 +286,19 @@ window.addEventListener("keydown", async function(e) {
     const win = windows[windows.length - 1];
 
     const resCode = await win.onUpdate("keydown", {key: e.key, code: e.code});
+    if(resCode == "close") windows.pop();
+});
+
+window.addEventListener("keyup", async function(e) {
+    const win = windows[windows.length - 1];
+
+    const resCode = await win.onUpdate("keyup", {key: e.key, code: e.code});
+    if(resCode == "close") windows.pop();
+});
+
+window.addEventListener("keypress", async function(e) {
+    const win = windows[windows.length - 1];
+
+    const resCode = await win.onUpdate("keypress", {key: e.key, code: e.code});
     if(resCode == "close") windows.pop();
 });
