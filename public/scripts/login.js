@@ -2,7 +2,7 @@ const password = "LunarOS";
 const maxPassAttempts = 10;
 
 let inputPassword = "";
-let loggedIn = true;
+let loggedIn = false;
 let loginErr = null;
 let controlDown = false;
 let passAttemptCount = 0;
