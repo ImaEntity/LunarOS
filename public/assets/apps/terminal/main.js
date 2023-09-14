@@ -1,6 +1,3 @@
-// Hey Angie, could you finish this?
-// Use eval with js to do commands.
-
 (async function() {
     const lines = ["C:\\>"];
     const cmdHistory = [];
@@ -17,6 +14,8 @@
         async function(updateType, params) {
             switch(updateType) {
                 case "update": {
+                    while(lines.length > 560 / 15) lines.splice(0, 1);
+
                     if(tick % 20 == 0) cursor = !cursor ? '|' : "";
                     tick++;
 

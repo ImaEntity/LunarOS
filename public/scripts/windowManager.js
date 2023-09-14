@@ -47,7 +47,7 @@ function windowManager_createWindow(title, pos, size, onUpdate) {
     return new Promise(function(resolve) {
         const win = {
             pos,
-            size,
+            size: [size[0], size[1] + 30],
             title,
             created: false,
             onUpdate: function(updateType, params) {

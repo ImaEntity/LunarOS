@@ -2,17 +2,38 @@ const icons = [
     {
         name: "Discord",
         scriptPath: "apps/discord/main",
-        icon: "apps/discord/icon"
+        icon: "apps/discord/icon",
+        pos: {
+            x: 8,
+            y: 8
+        }
     },
     {
         name: "Task Manager",
         scriptPath: "apps/taskmgr/main",
-        icon: "apps/taskmgr/icon"
+        icon: "apps/taskmgr/icon",
+        pos: {
+            x: 104,
+            y: 8
+        }
     },
     {
         name: "Terminal",
         scriptPath: "apps/terminal/main",
-        icon: "apps/terminal/icon"
+        icon: "apps/terminal/icon",
+        pos: {
+            x: 200,
+            y: 8
+        }
+    },
+    {
+        name: "{DEBUG_APP}",
+        scriptPath: "apps/calc/main",
+        icon: "popupIcons/error",
+        pos: {
+            x: 296,
+            y: 8
+        }
     }
 ];
 
@@ -31,7 +52,7 @@ function desktop_update() {
     for(let i = 0; i < icons.length; i++) {
         const icon = icons[i];
 
-        if(mouse.x > i * 96 + 8 && mouse.x < i * 96 + 56 && mouse.y > 8 && mouse.y < 56 && mouse.doubleClicked) {
+        if(mouse.x > icon.pos.x + 8 && mouse.x < icon.pos.x + 56 && mouse.y > icon.pos.y + 8 && mouse.y < icon.pos.y + 56 && mouse.doubleClicked) {
             const script = document.createElement("script");
             
             script.id = icon.scriptPath.split('/')[1];
@@ -53,17 +74,16 @@ function desktop_display() {
     for(let i = 0; i < icons.length; i++) {
         const icon = icons[i];
 
-        draw.drawImage(kernel_loadAsset(icon.icon), i * 96 + 8, 8, 48, 48);
+        draw.drawImage(kernel_loadAsset(icon.icon), icon.pos.x, icon.pos.y, 48, 48);
 
         draw.textAlign = "center";
         draw.fillStyle = "#ffffff";
         kernel_setFontSize(15);
 
-        draw.fillText(icon.name, i * 96 + 32, 72);
+        draw.fillText(icon.name, icon.pos.x + 24, icon.pos.y + 64);
     }
 
     if(!mouseDown) return;
-    //return;
 
     draw.lineWidth = 2;
     draw.fillStyle = "#00cc9966";

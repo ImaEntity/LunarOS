@@ -8,7 +8,7 @@ function kernel_openLink(link) {
 }
 
 function kernel_getVersion() {
-    return "V1.5.3";
+    return "V1.7.3";
 }
 
 function kernel_broadcastFinish(id) {
@@ -117,7 +117,7 @@ function kernel_loadAsset(name) {
 }
 
 function kernel_setCursor(img) {
-    document.body.style.cursor = `url(assets/${img}.png)`;
+    document.body.style.cursor = `url(assets/${img}.png), auto`;
 }
 
 function kernel_addFunctionPair(update, display) {
